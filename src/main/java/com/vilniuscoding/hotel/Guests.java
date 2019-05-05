@@ -9,13 +9,13 @@ import java.util.ArrayList;
 
 public class Guests extends Customer {
 
-	int id;
+	String id;
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -23,11 +23,11 @@ public class Guests extends Customer {
 		String sql = "INSERT INTO Guests (id, company, forename, surname, birth, phone, street, city, country, postal, email) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 
 		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setInt(1, this.id);
+			pstmt.setString(1, this.id);
 			pstmt.setString(2, company);
 			pstmt.setString(3, forename);
 			pstmt.setString(4, surname);
-			pstmt.setInt(5, birth);
+			pstmt.setString(5, birth);
 			pstmt.setString(6, phone);
 			pstmt.setString(7, street);
 			pstmt.setString(8, city);

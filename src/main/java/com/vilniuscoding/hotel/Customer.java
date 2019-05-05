@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Customer implements SqlService {
 
-	private int id;
+	private String id;
 	protected String company;
 	protected String forename;
 	protected String surname;
@@ -20,15 +20,15 @@ public class Customer implements SqlService {
 	protected String country;
 	protected String postal;
 	protected String email;
-	protected int birth;
+	protected String birth;
 	
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -123,12 +123,12 @@ public class Customer implements SqlService {
 	}
 
 
-	public int getBirth() {
+	public String getBirth() {
 		return birth;
 	}
 
 
-	public void setBirth(int birth) {
+	public void setBirth(String birth) {
 		this.birth = birth;
 	}
 
@@ -137,11 +137,11 @@ public class Customer implements SqlService {
 		String sql = "INSERT INTO Customer (id, company, forename, surname, birth, phone, street, city, country, postal, email) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 
 		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setInt(1, this.id);
+			pstmt.setString(1, this.id);
 			pstmt.setString(2, this.company);
 			pstmt.setString(3, this.forename);
 			pstmt.setString(4, this.surname);
-			pstmt.setInt(5, this.birth);
+			pstmt.setString(5, this.birth);
 			pstmt.setString(6, this.phone);
 			pstmt.setString(7, this.street);
 			pstmt.setString(8, this.city);
