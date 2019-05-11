@@ -2,8 +2,8 @@ package com.vilniuscoding.hotel;
 
 public class RoomPrice {
 	
-	int id;
-	double price;
+	private int id;
+	private double price;
 	
 	public int getId() {
 		return id;

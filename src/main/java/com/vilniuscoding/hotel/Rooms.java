@@ -2,18 +2,45 @@ package com.vilniuscoding.hotel;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
-public class Rooms implements SqlService {
+public class Rooms implements SqlDbConnect {
 
-	int id;
-	String floor;
-	String description;
-	boolean occupied;
-	boolean cleaned;
+	private int id;
+	private String floor;
+	private String description;
+	private boolean occupied;
+	private boolean cleaned;
+
+	public ArrayList<String> getRooms() {
+		String sql = "SELECT id, floor, description, occupied, cleaned FROM Rooms";
+		ArrayList<String> list = new ArrayList<>();
+
+		try (Connection conn = this.connect();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql)) {
+
+			while (rs.next()) {
+
+				list.add(rs.getString("id"));
+				list.add(rs.getString("floor"));
+				list.add(rs.getString("description"));
+				list.add(rs.getString("occupied"));
+				list.add(rs.getString("cleaned"));
+
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return list;
+
+	}
 
 	public void changeStatusCleaned() {
-		String sql = "UPDATE Rooms cleand VALUES(?) WHERE id VALUES(?)";
+		String sql = "UPDATE Rooms SET cleaned = ? " + "WHERE id = ?";
 
 		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setBoolean(1, this.cleaned);
@@ -23,9 +50,9 @@ public class Rooms implements SqlService {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	public void changeStatusOccupied() {
-		String sql = "UPDATE Rooms occupied VALUES(?) WHERE id VALUES(?)";
+		String sql = "UPDATE Rooms SET occupied = ? " + "WHERE id = ?";
 
 		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setBoolean(1, this.occupied);
@@ -35,8 +62,7 @@ public class Rooms implements SqlService {
 			System.out.println(e.getMessage());
 		}
 	}
-	
-	
+
 	public int getId() {
 		return id;
 	}

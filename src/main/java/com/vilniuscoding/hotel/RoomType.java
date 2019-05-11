@@ -2,8 +2,8 @@ package com.vilniuscoding.hotel;
 
 public class RoomType {
 
-	int id;
-	String type;
+	private int id;
+	private String type;
 
 	public int getId() {
 		return id;

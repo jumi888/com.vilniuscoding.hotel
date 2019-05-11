@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 
 
-public interface SqlService {
+public interface SqlDbConnect {
 
 	default Connection connect() {
 		// SQLite connection string

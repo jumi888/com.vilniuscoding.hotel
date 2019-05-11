@@ -8,9 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 
-public class Customer implements SqlService {
+public class Customer implements SqlDbConnect {
 
-	private String id;
+	static String id;
 	protected String company;
 	protected String forename;
 	protected String surname;
@@ -21,6 +21,57 @@ public class Customer implements SqlService {
 	protected String postal;
 	protected String email;
 	protected String birth;
+	
+	public void insertCustomer() {
+		String sql = "INSERT INTO Customer (id, company, forename, surname, birth, phone, street, city, country, postal, email) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+
+		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, id);
+			pstmt.setString(2, this.company);
+			pstmt.setString(3, this.forename);
+			pstmt.setString(4, this.surname);
+			pstmt.setString(5, this.birth);
+			pstmt.setString(6, this.phone);
+			pstmt.setString(7, this.street);
+			pstmt.setString(8, this.city);
+			pstmt.setString(9, this.country);
+			pstmt.setString(10, this.postal);
+			pstmt.setString(11, this.email);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public ArrayList<String> getCustomers() {
+		String sql = "SELECT id, company, forename, surname, birth, phone, city, country, postal, email FROM Customer";
+		ArrayList<String> list = new ArrayList<>();
+
+		try (Connection conn = this.connect();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql)) {
+
+			while (rs.next()) {
+
+				list.add(rs.getString("id"));
+				list.add(rs.getString("company"));
+				list.add(rs.getString("forename"));
+				list.add(rs.getString("surname"));
+				list.add(rs.getString("birth"));
+				list.add(rs.getString("phone"));
+				list.add(rs.getString("city"));
+				list.add(rs.getString("country"));
+				list.add(rs.getString("postal"));
+				list.add(rs.getString("email"));
+				
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return list;
+
+	}
+
 	
 
 	public String getId() {
@@ -132,54 +183,5 @@ public class Customer implements SqlService {
 		this.birth = birth;
 	}
 
-
-	public void insertCustomer() {
-		String sql = "INSERT INTO Customer (id, company, forename, surname, birth, phone, street, city, country, postal, email) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-
-		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, this.id);
-			pstmt.setString(2, this.company);
-			pstmt.setString(3, this.forename);
-			pstmt.setString(4, this.surname);
-			pstmt.setString(5, this.birth);
-			pstmt.setString(6, this.phone);
-			pstmt.setString(7, this.street);
-			pstmt.setString(8, this.city);
-			pstmt.setString(9, this.country);
-			pstmt.setString(10, this.postal);
-			pstmt.setString(11, this.email);
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-	}
-
-	public ArrayList<String> getCustomers() {
-		String sql = "SELECT id, company, forename, surname, birth, phone, city, country, postal, email FROM Customer";
-		ArrayList<String> list = new ArrayList<>();
-
-		try (Connection conn = this.connect();
-				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(sql)) {
-
-			while (rs.next()) {
-
-				list.add(rs.getString("id"));
-				list.add(rs.getString("company"));
-				list.add(rs.getString("forename"));
-				list.add(rs.getString("surname"));
-				list.add(rs.getString("birth"));
-				list.add(rs.getString("phone"));
-				list.add(rs.getString("city"));
-				list.add(rs.getString("country"));
-				list.add(rs.getString("postal"));
-				list.add(rs.getString("email"));
-				
-			}
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-		return list;
-
-	}
 }
+	
