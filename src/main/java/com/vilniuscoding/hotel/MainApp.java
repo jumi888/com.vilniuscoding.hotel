@@ -36,21 +36,12 @@ public class MainApp extends Application {
 	private DatePicker checkInDatePicker;
 	private DatePicker checkOutDatePicker;
 
-	static LocalDate checkIn;
-	static LocalDate checkOut;
-	static int stayNights;
-	static String nights;
-	static double totalPrice;
-	static int roomQty;
-	static int roomId;
-	static int checkOutRoomId;
-	
-
 	Booking booking = new Booking();
 	RoomPrice roomPrice = new RoomPrice();
 	Customer customer = new Customer();
 	RoomType roomType = new RoomType();
 	Rooms rooms = new Rooms();
+	Calculations calc = new Calculations();
 
 	@Override
 	public void start(Stage stage) {
@@ -103,10 +94,10 @@ public class MainApp extends Application {
 
 			@Override
 			public void handle(ActionEvent event) {
-				checkIn = checkInDatePicker.getValue();
+				calc.setCheckIn(checkInDatePicker.getValue());
 				booking.setBookDate(String.valueOf(LocalDate.now()));
-				booking.setBookStart(String.valueOf(checkIn));
-				System.err.println("Selected Check-in date: " + checkIn);
+				booking.setBookStart(String.valueOf(calc.getCheckIn()));
+				System.err.println("Selected Check-in date: " + calc.getCheckIn());
 				return;
 			}
 		});
@@ -115,13 +106,11 @@ public class MainApp extends Application {
 			// public LocalDate checkOut;
 			@Override
 			public void handle(ActionEvent event) {
-				checkOut = checkOutDatePicker.getValue();
-				System.err.println("Selected Check-out date: " + checkOut);
+				calc.setCheckOut(checkOutDatePicker.getValue());
+				System.err.println("Selected Check-out date: " + calc.getCheckOut());
 
-				MainApp checkInOutDif = new MainApp();
-				nights = Integer.toString(checkInOutDif.calcStayNights());
-				booking.setBookEnd(String.valueOf(checkOut));
-				System.out.println("Total stay nights: " + nights);
+				booking.setBookEnd(String.valueOf(calc.getCheckOut()));
+				System.out.println("Total stay nights: " + calc.calcStayNights(calc.getCheckIn(), calc.getCheckOut()));
 
 				return;
 
@@ -305,13 +294,13 @@ public class MainApp extends Application {
 		roomNumberField.setPromptText("Room number");
 		gridPane.add(roomNumberField, 20, 4);
 
-		Label roomCheckOutNumberLabel = new Label("CheckOut Room number : ");
-		gridPane.add(roomCheckOutNumberLabel, 10, 22);
+		Label roomCheckOutNumberLabel = new Label("Check IN_Out Room NR. : ");
+		gridPane.add(roomCheckOutNumberLabel, 10, 21);
 
 		TextField roomCheckOutNumberField = new TextField();
 		roomCheckOutNumberField.setPrefHeight(20);
 		roomCheckOutNumberField.setPromptText("CheckOut Room number");
-		gridPane.add(roomCheckOutNumberField, 10, 23);
+		gridPane.add(roomCheckOutNumberField, 10, 22);
 
 		Button button = new Button("Book");
 		gridPane.add(button, 0, 24);
@@ -418,11 +407,10 @@ public class MainApp extends Application {
 
 				}
 
-				roomQty = Integer.parseInt(roomQtyField.getText());
-				calcTotalPay();
-				booking.setTotalPay(totalPrice);
+				calc.setPricePerRoom(roomPrice.getPrice());
+				calc.setRoomQty(Integer.parseInt(roomQtyField.getText()));
 
-				booking.insertBooking(); //Insert booking data to data base
+				booking.setTotalPay(calc.calcTotalPay(calc.getStayNights(), calc.getTotalPrice(), calc.getRoomQty()));
 
 				customer.setId(companyIdField.getText());
 				customer.setCompany(companyNameField.getText());
@@ -438,18 +426,14 @@ public class MainApp extends Application {
 
 				customer.insertCustomer(); // Insert customer data to data base
 
-				roomId = Integer.parseInt(roomNumberField.getText());
-				rooms.setId(roomId);
-				rooms.setOccupied(true);
-				rooms.setCleaned(false);
-				rooms.changeStatusCleaned(); // change room clean status in data base
-				rooms.changeStatusOccupied(); // change room occupancy status in data base
+				booking.insertBooking(); // Insert booking data to data base
 
 				showAlert(Alert.AlertType.CONFIRMATION, gridPane.getScene().getWindow(), "Registration Successful!",
 						"Customer: " + customerNameField.getText() + " " + customerSurNameField.getText() + '\n'
-								+ "Room: " + typeOfRoomMenu.getText() + '\n' + "Room Number: "
-								+ roomNumberField.getText() + '\n' + "Ordered nights: " + nights + '\n'
-								+ "Room quantity: " + roomQtyField.getText() + '\n' + "Total price: " + totalPrice);
+								+ "Room: " + typeOfRoomMenu.getText() + '\n' + "Room price per night: "
+								+ roomPrice.getPrice() + " EUR" + '\n' + "Room Number: " + roomNumberField.getText()
+								+ '\n' + "Ordered nights: " + calc.getStayNights() + '\n' + "Room quantity: "
+								+ roomQtyField.getText() + '\n' + "Total price: " + calc.getTotalPrice() + " EUR");
 
 			}
 
@@ -501,10 +485,40 @@ public class MainApp extends Application {
 
 				}
 
-				checkOutRoomId = Integer.parseInt(roomCheckOutNumberField.getText());
-				rooms.setId(checkOutRoomId);
+				rooms.setId(Integer.parseInt(roomCheckOutNumberField.getText()));
 				rooms.setOccupied(false);
 				rooms.setCleaned(true);
+				rooms.changeStatusCleaned();
+				rooms.changeStatusOccupied();
+			}
+		});
+
+		Button button3 = new Button("Check In");
+		gridPane.add(button3, 10, 23);
+		button3.setLayoutX(300);
+		button3.setLayoutY(400);
+		button3.setMinWidth(150);
+		button3.setMinHeight(50);
+		button3.setMaxWidth(150);
+		button3.setMaxHeight(50);
+		button3.setPrefWidth(150);
+		button3.setPrefHeight(50);
+
+		button3.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+
+				if (roomCheckOutNumberField.getText().isEmpty()) {
+					showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!",
+							"Please enter Check IN_OUT Room number");
+
+					return;
+
+				}
+
+				rooms.setId(Integer.parseInt(roomCheckOutNumberField.getText()));
+				rooms.setOccupied(true);
+				rooms.setCleaned(false);
 				rooms.changeStatusCleaned();
 				rooms.changeStatusOccupied();
 			}
@@ -519,21 +533,6 @@ public class MainApp extends Application {
 		alert.setContentText(message);
 		alert.initOwner(owner);
 		alert.show();
-	}
-
-	public int calcStayNights() { // method, calculating stay nights
-
-		stayNights = checkOut.compareTo(checkIn);
-
-		return stayNights;
-
-	}
-
-	public double calcTotalPay() { // method, calculating total stay price
-		totalPrice = stayNights * roomPrice.getPrice() * roomQty;
-
-		return totalPrice;
-
 	}
 
 	public static void main(String[] args) {

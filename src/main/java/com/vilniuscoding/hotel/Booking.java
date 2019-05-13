@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Booking implements SqlDbConnect {
 
-	private int id = 1;
+	private int id;
 	private String bookDate;
 	private String bookStart;
 	private String bookEnd;
@@ -17,16 +17,16 @@ public class Booking implements SqlDbConnect {
 	private String coments;
 
 	public void insertBooking() {
-		String sql = "INSERT INTO Booking (id, bookDate, bookStart, bookEnd, totalPay, Customer_id, coments) VALUES(?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO Booking (bookDate, bookStart, bookEnd, totalPay, Customer_id, coments) VALUES(?,?,?,?,?,?)";
 
 		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setInt(1, this.id++);
-			pstmt.setString(2, this.bookDate);
-			pstmt.setString(3, this.bookStart);
-			pstmt.setString(4, this.bookEnd);
-			pstmt.setDouble(5, this.totalPay);
-			pstmt.setString(6, Customer.id);
-			pstmt.setString(7, this.coments);
+			Customer customer = new Customer();
+			pstmt.setString(1, this.bookDate);
+			pstmt.setString(2, this.bookStart);
+			pstmt.setString(3, this.bookEnd);
+			pstmt.setDouble(4, this.totalPay);
+			pstmt.setString(5, customer.getId());
+			pstmt.setString(6, this.coments);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());

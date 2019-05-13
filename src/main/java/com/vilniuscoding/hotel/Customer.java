@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Customer implements SqlDbConnect {
 
-	static String id;
+	protected String id;
 	protected String company;
 	protected String forename;
 	protected String surname;
