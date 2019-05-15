@@ -1,6 +1,7 @@
 package com.vilniuscoding.hotel;
 
 import javafx.application.Application;
+
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -13,9 +14,10 @@ import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
+import java.io.PrintStream;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
+
 import java.util.Locale;
 
 import javafx.geometry.HPos;
@@ -25,14 +27,18 @@ import javafx.scene.control.Label;
 
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
 public class MainApp extends Application {
 
 	private Stage stage;
+
+	PrintStream standardOut;
 	private DatePicker checkInDatePicker;
 	private DatePicker checkOutDatePicker;
 
@@ -295,12 +301,12 @@ public class MainApp extends Application {
 		gridPane.add(roomNumberField, 20, 4);
 
 		Label roomCheckOutNumberLabel = new Label("Check IN_Out Room NR. : ");
-		gridPane.add(roomCheckOutNumberLabel, 10, 21);
+		gridPane.add(roomCheckOutNumberLabel, 20, 8);
 
 		TextField roomCheckOutNumberField = new TextField();
 		roomCheckOutNumberField.setPrefHeight(20);
-		roomCheckOutNumberField.setPromptText("CheckOut Room number");
-		gridPane.add(roomCheckOutNumberField, 10, 22);
+		roomCheckOutNumberField.setPromptText("Check Out Room number");
+		gridPane.add(roomCheckOutNumberField, 20, 9);
 
 		Button button = new Button("Book");
 		gridPane.add(button, 0, 24);
@@ -408,9 +414,10 @@ public class MainApp extends Application {
 				}
 
 				calc.setPricePerRoom(roomPrice.getPrice());
+
 				calc.setRoomQty(Integer.parseInt(roomQtyField.getText()));
 
-				booking.setTotalPay(calc.calcTotalPay(calc.getStayNights(), calc.getTotalPrice(), calc.getRoomQty()));
+				booking.setTotalPay(calc.calcTotalPay(calc.getStayNights(), calc.getPricePerRoom(), calc.getRoomQty()));
 
 				customer.setId(companyIdField.getText());
 				customer.setCompany(companyNameField.getText());
@@ -454,24 +461,56 @@ public class MainApp extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 
-				ArrayList<String> roomList = new ArrayList<String>(rooms.getRooms());
+				TextArea textArea = new TextArea();
+				textArea.setPrefHeight(400);
+				textArea.setMinWidth(300);
+				textArea.setMinHeight(400);
+				textArea.setMaxWidth(300);
+				textArea.setMaxHeight(400);
+				textArea.setPrefWidth(300);
+				textArea.setPrefHeight(400);
+				// textArea.setEditable(false);
+				PrintStream printStream = new PrintStream(new CustomOutputStream(textArea));
 
-				showAlert(Alert.AlertType.CONFIRMATION, gridPane.getScene().getWindow(), "ROOM STATUS",
-						"ROOM STATUS (Id, Floor, Description, Occupied, Cleaned: " + roomList);
+				// keeps reference of standard output stream
+				standardOut = System.out;
+
+				// re-assigns standard output stream and error output stream
+				System.setOut(printStream);
+				System.setErr(printStream);
+
+				StackPane secondaryLayout = new StackPane();
+				secondaryLayout.getChildren().add(textArea);
+
+				Scene secondScene = new Scene(secondaryLayout, 400, 700);
+				secondScene.getStylesheets().add(getClass().getResource("MainApp.css").toExternalForm());
+
+				// New window (Stage)
+				Stage newWindow = new Stage();
+				newWindow.setTitle("Hotel Room Status");
+				newWindow.setScene(secondScene);
+
+				// Set position of second window, related to primary window.
+				newWindow.setX(stage.getX() + 1000);
+				newWindow.setY(stage.getY() + 100);
+				newWindow.show();
+
+				rooms.getRooms();
+
+//				showAlert(Alert.AlertType.CONFIRMATION, gridPane.getScene().getWindow(), "ROOM STATUS", "ROOM STATUS: "
+//						+ '\n' + "Id, Floor, Description, Occupied, Cleaned: " + '\n' + rooms.getRooms());
 
 			}
 		});
 
 		Button button2 = new Button("Check Out");
-		gridPane.add(button2, 10, 24);
-		button2.setLayoutX(300);
-		button2.setLayoutY(400);
+		gridPane.add(button2, 20, 10);
 		button2.setMinWidth(150);
-		button2.setMinHeight(50);
+		button2.setMinHeight(25);
 		button2.setMaxWidth(150);
-		button2.setMaxHeight(50);
+		button2.setMaxHeight(25);
 		button2.setPrefWidth(150);
-		button2.setPrefHeight(50);
+		button2.setPrefHeight(25);
 
 		button2.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -494,15 +533,15 @@ public class MainApp extends Application {
 		});
 
 		Button button3 = new Button("Check In");
-		gridPane.add(button3, 10, 23);
-		button3.setLayoutX(300);
-		button3.setLayoutY(400);
+		gridPane.add(button3, 20, 11);
+//		button3.setLayoutX(300);
+//		button3.setLayoutY(400);
 		button3.setMinWidth(150);
-		button3.setMinHeight(50);
+		button3.setMinHeight(25);
 		button3.setMaxWidth(150);
-		button3.setMaxHeight(50);
+		button3.setMaxHeight(25);
 		button3.setPrefWidth(150);
-		button3.setPrefHeight(50);
+		button3.setPrefHeight(25);
 
 		button3.setOnAction(new EventHandler<ActionEvent>() {
 			@Override

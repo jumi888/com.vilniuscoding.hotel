@@ -15,12 +15,15 @@ public class Booking implements SqlDbConnect {
 	private String bookEnd;
 	private double totalPay;
 	private String coments;
-
+	
+	Customer customer = new Customer();
+	Rooms rooms = new Rooms();
+	
 	public void insertBooking() {
 		String sql = "INSERT INTO Booking (bookDate, bookStart, bookEnd, totalPay, Customer_id, coments) VALUES(?,?,?,?,?,?)";
 
 		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			Customer customer = new Customer();
+			
 			pstmt.setString(1, this.bookDate);
 			pstmt.setString(2, this.bookStart);
 			pstmt.setString(3, this.bookEnd);
@@ -31,7 +34,17 @@ public class Booking implements SqlDbConnect {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		String sql1 = "INSERT INTO Booking_Rooms_Guests_Link (Rooms_id ) VALUES (?)";
+
+		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql1)) {
+			
+			pstmt.setInt(1, rooms.getId());	
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 	}
+	
 
 	public ArrayList<String> getBooking() {
 		String sql = "SELECT id, bookDate, bookStart, bookEnd, totalPay, coments FROM Booking";

@@ -3,14 +3,14 @@ package com.vilniuscoding.hotel;
 import java.time.LocalDate;
 
 public class Calculations {
-	
+
 	private LocalDate checkIn;
 	private LocalDate checkOut;
 	private int stayNights;
 	private double totalPrice;
 	private double pricePerRoom;
 	private int roomQty;
-	
+
 	public int calcStayNights(LocalDate checkIn, LocalDate checkOut) { // method, calculating stay nights
 
 		stayNights = checkOut.compareTo(checkIn);
@@ -19,13 +19,15 @@ public class Calculations {
 
 	}
 
-	public double calcTotalPay(int stayNights, double pricePerRoom, int roomQty) { // method, calculating total stay price
+	public double calcTotalPay(int stayNights, double pricePerRoom, int roomQty) { // method, calculating total stay
+																					// price
+
 		totalPrice = stayNights * pricePerRoom * roomQty;
 
 		return totalPrice;
 
 	}
-	
+
 	public LocalDate getCheckIn() {
 		return checkIn;
 	}
@@ -74,6 +76,4 @@ public class Calculations {
 		this.roomQty = roomQty;
 	}
 
-	
-	
 }
