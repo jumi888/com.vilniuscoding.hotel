@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 
 public class Booking implements SqlDbConnect {
 
@@ -14,61 +12,66 @@ public class Booking implements SqlDbConnect {
 	private String bookStart;
 	private String bookEnd;
 	private double totalPay;
-	private String coments;
-	
+	private String Customer_id;
+	private String Rooms_id;
+
 	Customer customer = new Customer();
 	Rooms rooms = new Rooms();
-	
+
 	public void insertBooking() {
-		String sql = "INSERT INTO Booking (bookDate, bookStart, bookEnd, totalPay, Customer_id, coments) VALUES(?,?,?,?,?,?)";
+		String sql = "INSERT INTO Booking (bookDate, bookStart, bookEnd, totalPay, Customer_id, Rooms_id) VALUES(?,?,?,?,?,?)";
 
 		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			
+
 			pstmt.setString(1, this.bookDate);
 			pstmt.setString(2, this.bookStart);
 			pstmt.setString(3, this.bookEnd);
 			pstmt.setDouble(4, this.totalPay);
-			pstmt.setString(5, customer.getId());
-			pstmt.setString(6, this.coments);
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-		String sql1 = "INSERT INTO Booking_Rooms_Guests_Link (Rooms_id ) VALUES (?)";
-
-		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql1)) {
-			
-			pstmt.setInt(1, rooms.getId());	
+			pstmt.setString(5, this.Customer_id);
+			pstmt.setString(6, this.Rooms_id);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 	}
-	
 
-	public ArrayList<String> getBooking() {
-		String sql = "SELECT id, bookDate, bookStart, bookEnd, totalPay, coments FROM Booking";
-		ArrayList<String> list = new ArrayList<>();
+	public void getBooking() {
+		String sql = "SELECT * " + "FROM Booking WHERE Customer_id = ? ";
+		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-		try (Connection conn = this.connect();
-				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(sql)) {
+			// set the value
+			pstmt.setString(1, this.Customer_id);
+			//
+			ResultSet rs = pstmt.executeQuery();
 
+			// loop through the result set
 			while (rs.next()) {
-
-				list.add(rs.getString("id"));
-				list.add(rs.getString("bookDate"));
-				list.add(rs.getString("bookStart"));
-				list.add(rs.getString("bookEnd"));
-				list.add(rs.getString("totalPay"));
-				list.add(rs.getString("coments"));
-
+				System.out.println("---------------------------------" + "\n" + "Booking ID: " + rs.getInt("id") + "\n"
+						+ "Booking Date: " + rs.getString("bookDate") + "\n" + "Check-In: " + rs.getString("bookStart")
+						+ "\n" + "Check-Out: " + rs.getString("bookEnd") + "\n" + "Total Price: "
+						+ rs.getString("totalPay") + "\n" + "Customer ID: " + rs.getString("Customer_id") + "\n"
+						+ "----------------------------------------");
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		return list;
 
+	}
+
+	public String getCustomer_id() {
+		return Customer_id;
+	}
+
+	public void setCustomer_id(String customer_id) {
+		Customer_id = customer_id;
+	}
+
+	public String getRooms_id() {
+		return Rooms_id;
+	}
+
+	public void setRooms_id(String rooms_id) {
+		Rooms_id = rooms_id;
 	}
 
 	public int getId() {
@@ -109,14 +112,6 @@ public class Booking implements SqlDbConnect {
 
 	public void setTotalPay(double d) {
 		this.totalPay = d;
-	}
-
-	public String getComents() {
-		return coments;
-	}
-
-	public void setComents(String coments) {
-		this.coments = coments;
 	}
 
 }

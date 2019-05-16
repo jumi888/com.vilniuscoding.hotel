@@ -63,7 +63,7 @@ public class MainApp extends Application {
 		VBox vbox = new VBox(20);
 
 		vbox.setStyle("-fx-padding: 40;-fy-padding: 50;");
-		Scene scene = new Scene(vbox, 1000, 900);
+		Scene scene = new Scene(vbox, 800, 900);
 		scene.getStylesheets().add(getClass().getResource("MainApp.css").toExternalForm());
 		stage.setScene(scene);
 		checkInDatePicker = new DatePicker();
@@ -138,95 +138,95 @@ public class MainApp extends Application {
 		vbox.getChildren().add(gridPane);
 
 		Label companyNameLabel = new Label("Company Name : ");
-		gridPane.add(companyNameLabel, 31, 1);
+		gridPane.add(companyNameLabel, 6, 1);
 
 		TextField companyNameField = new TextField();
 		companyNameField.setPrefHeight(20);
 		companyNameField.setPromptText("Enter text here");
-		gridPane.add(companyNameField, 31, 2);
+		gridPane.add(companyNameField, 6, 2);
 
-		Label companyIdLabel = new Label("Company or passport ID : ");
-		gridPane.add(companyIdLabel, 31, 3);
+		Label companyIdLabel = new Label("Company ID : ");
+		gridPane.add(companyIdLabel, 6, 3);
 
 		TextField companyIdField = new TextField();
 		companyIdField.setPrefHeight(20);
 		companyIdField.setPromptText("Enter text here");
-		gridPane.add(companyIdField, 31, 4);
+		gridPane.add(companyIdField, 6, 4);
 
 		Label customerNameLabel = new Label("Customer Name : ");
-		gridPane.add(customerNameLabel, 31, 5);
+		gridPane.add(customerNameLabel, 6, 5);
 
 		TextField customerNameField = new TextField();
 		customerNameField.setPrefHeight(20);
 		customerNameField.setPromptText("Enter text here");
-		gridPane.add(customerNameField, 31, 6);
+		gridPane.add(customerNameField, 6, 6);
 
 		Label customerSurNameLabel = new Label("Customer Last Name : ");
-		gridPane.add(customerSurNameLabel, 31, 7);
+		gridPane.add(customerSurNameLabel, 6, 7);
 
 		TextField customerSurNameField = new TextField();
 		customerSurNameField.setPrefHeight(20);
 		customerSurNameField.setPromptText("Enter text here");
-		gridPane.add(customerSurNameField, 31, 8);
+		gridPane.add(customerSurNameField, 6, 8);
 
 		Label customerPhoneLabel = new Label("Phone Number : ");
-		gridPane.add(customerPhoneLabel, 31, 9);
+		gridPane.add(customerPhoneLabel, 6, 9);
 
 		TextField customerPhoneField = new TextField();
 		customerPhoneField.setPrefHeight(20);
 		customerPhoneField.setPromptText("Enter text here");
-		gridPane.add(customerPhoneField, 31, 10);
+		gridPane.add(customerPhoneField, 6, 10);
 
 		Label customerAdressLabel = new Label("Adress : ");
-		gridPane.add(customerAdressLabel, 31, 11);
+		gridPane.add(customerAdressLabel, 6, 11);
 
 		TextField customerAdressField = new TextField();
 		customerPhoneField.setPrefHeight(20);
 		customerAdressField.setPromptText("Enter text here");
-		gridPane.add(customerAdressField, 31, 12);
+		gridPane.add(customerAdressField, 6, 12);
 
 		Label customerCityLabel = new Label("City : ");
-		gridPane.add(customerCityLabel, 31, 13);
+		gridPane.add(customerCityLabel, 6, 13);
 
 		TextField customerCityField = new TextField();
 		customerCityField.setPrefHeight(20);
 		customerCityField.setPromptText("Enter text here");
-		gridPane.add(customerCityField, 31, 14);
+		gridPane.add(customerCityField, 6, 14);
 
 		Label customerCountryLabel = new Label("Country : ");
-		gridPane.add(customerCountryLabel, 31, 15);
+		gridPane.add(customerCountryLabel, 6, 15);
 
 		TextField customerCountryField = new TextField();
 		customerCountryField.setPrefHeight(20);
 		customerCountryField.setPromptText("Enter text here");
-		gridPane.add(customerCountryField, 31, 16);
+		gridPane.add(customerCountryField, 6, 16);
 
 		Label customerPostalLabel = new Label("Post Code : ");
-		gridPane.add(customerPostalLabel, 31, 17);
+		gridPane.add(customerPostalLabel, 6, 17);
 
 		TextField customerPostalField = new TextField();
 		customerPostalField.setPrefHeight(20);
 		customerPostalField.setPromptText("Enter text here");
-		gridPane.add(customerPostalField, 31, 18);
+		gridPane.add(customerPostalField, 6, 18);
 
 		Label customerEmailLabel = new Label("Email adress : ");
-		gridPane.add(customerEmailLabel, 31, 19);
+		gridPane.add(customerEmailLabel, 6, 19);
 
 		TextField customerEmailField = new TextField();
 		customerEmailField.setPrefHeight(20);
 		customerEmailField.setPromptText("Enter text here");
-		gridPane.add(customerEmailField, 31, 20);
+		gridPane.add(customerEmailField, 6, 20);
 
 		Label customerBirthLabel = new Label("Date of Birth : ");
-		gridPane.add(customerBirthLabel, 31, 21);
+		gridPane.add(customerBirthLabel, 6, 21);
 
 		TextField customerBirthField = new TextField();
 		customerBirthField.setPrefHeight(20);
 		customerBirthField.setPromptText("Enter text here");
-		gridPane.add(customerBirthField, 31, 22);
+		gridPane.add(customerBirthField, 6, 22);
 
 		Label typeOfRoomLabel = new Label("Choose type of room  : ");
-		gridPane.add(typeOfRoomLabel, 20, 1);
+		gridPane.add(typeOfRoomLabel, 3, 1);
 
 		MenuButton typeOfRoomMenu = new MenuButton("Room Type");
 		typeOfRoomMenu.setMinWidth(150);
@@ -236,7 +236,7 @@ public class MainApp extends Application {
 		typeOfRoomMenu.setPrefWidth(150);
 		typeOfRoomMenu.setPrefHeight(25);
 
-		gridPane.add(typeOfRoomMenu, 20, 2);
+		gridPane.add(typeOfRoomMenu, 3, 2);
 		MenuItem standSingleRoom = new MenuItem("Standart Single Room (1 - 2)");
 		MenuItem standDoubleRoom = new MenuItem("Standart Double Room (3 - 4)");
 		MenuItem superiorRoom = new MenuItem("Superior Room (5 - 10)");
@@ -285,33 +285,31 @@ public class MainApp extends Application {
 		});
 
 		Label roomQtyLabel = new Label("Number of rooms : ");
-		gridPane.add(roomQtyLabel, 20, 5);
+		gridPane.add(roomQtyLabel, 3, 5);
 
 		TextField roomQtyField = new TextField();
 		roomQtyField.setPrefHeight(20);
 		roomQtyField.setPromptText("Number of Rooms");
-		gridPane.add(roomQtyField, 20, 6);
+		gridPane.add(roomQtyField, 3, 6);
 
 		Label roomNumberLabel = new Label("Room number : ");
-		gridPane.add(roomNumberLabel, 20, 3);
+		gridPane.add(roomNumberLabel, 3, 3);
 
 		TextField roomNumberField = new TextField();
 		roomNumberField.setPrefHeight(20);
 		roomNumberField.setPromptText("Room number");
-		gridPane.add(roomNumberField, 20, 4);
+		gridPane.add(roomNumberField, 3, 4);
 
 		Label roomCheckOutNumberLabel = new Label("Check IN_Out Room NR. : ");
-		gridPane.add(roomCheckOutNumberLabel, 20, 8);
+		gridPane.add(roomCheckOutNumberLabel, 3, 8);
 
 		TextField roomCheckOutNumberField = new TextField();
 		roomCheckOutNumberField.setPrefHeight(20);
 		roomCheckOutNumberField.setPromptText("Check Out Room number");
-		gridPane.add(roomCheckOutNumberField, 20, 9);
+		gridPane.add(roomCheckOutNumberField, 3, 9);
 
 		Button button = new Button("Book");
 		gridPane.add(button, 0, 24);
-		button.setLayoutX(300);
-		button.setLayoutY(200);
 		button.setMinWidth(150);
 		button.setMinHeight(50);
 		button.setMaxWidth(150);
@@ -418,7 +416,9 @@ public class MainApp extends Application {
 				calc.setRoomQty(Integer.parseInt(roomQtyField.getText()));
 
 				booking.setTotalPay(calc.calcTotalPay(calc.getStayNights(), calc.getPricePerRoom(), calc.getRoomQty()));
-
+                booking.setRooms_id(roomNumberField.getText());
+				booking.setCustomer_id(companyIdField.getText());
+                
 				customer.setId(companyIdField.getText());
 				customer.setCompany(companyNameField.getText());
 				customer.setForename(customerNameField.getText());
@@ -447,9 +447,7 @@ public class MainApp extends Application {
 		});
 
 		Button button1 = new Button("Check Rooms Status");
-		gridPane.add(button1, 20, 24);
-		button1.setLayoutX(300);
-		button1.setLayoutY(400);
+		gridPane.add(button1, 3, 24);
 		button1.setMinWidth(150);
 		button1.setMinHeight(50);
 		button1.setMaxWidth(150);
@@ -469,7 +467,7 @@ public class MainApp extends Application {
 				textArea.setMaxHeight(400);
 				textArea.setPrefWidth(300);
 				textArea.setPrefHeight(400);
-				// textArea.setEditable(false);
+				textArea.setEditable(false);
 				PrintStream printStream = new PrintStream(new CustomOutputStream(textArea));
 
 				// keeps reference of standard output stream
@@ -491,7 +489,7 @@ public class MainApp extends Application {
 				newWindow.setScene(secondScene);
 
 				// Set position of second window, related to primary window.
-				newWindow.setX(stage.getX() + 1000);
+				newWindow.setX(stage.getX() + 800);
 				newWindow.setY(stage.getY() + 100);
 				newWindow.show();
 
@@ -504,7 +502,7 @@ public class MainApp extends Application {
 		});
 
 		Button button2 = new Button("Check Out");
-		gridPane.add(button2, 20, 10);
+		gridPane.add(button2, 3, 10);
 		button2.setMinWidth(150);
 		button2.setMinHeight(25);
 		button2.setMaxWidth(150);
@@ -533,9 +531,7 @@ public class MainApp extends Application {
 		});
 
 		Button button3 = new Button("Check In");
-		gridPane.add(button3, 20, 11);
-//		button3.setLayoutX(300);
-//		button3.setLayoutY(400);
+		gridPane.add(button3, 3, 11);
 		button3.setMinWidth(150);
 		button3.setMinHeight(25);
 		button3.setMaxWidth(150);
@@ -555,6 +551,7 @@ public class MainApp extends Application {
 
 				}
 
+				
 				rooms.setId(Integer.parseInt(roomCheckOutNumberField.getText()));
 				rooms.setOccupied(true);
 				rooms.setCleaned(false);
@@ -563,6 +560,65 @@ public class MainApp extends Application {
 			}
 		});
 
+		Button button4 = new Button("Get Booking Status ");
+		gridPane.add(button4, 1, 24);
+		button4.setMinWidth(150);
+		button4.setMinHeight(50);
+		button4.setMaxWidth(150);
+		button4.setMaxHeight(50);
+		button4.setPrefWidth(150);
+		button4.setPrefHeight(50);
+
+		button4.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+
+				if (companyIdField.getText().isEmpty()) {
+					showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!",
+							"Please enter company or your passport id");
+					return;
+				}
+
+				TextArea textArea = new TextArea();
+				textArea.setPrefHeight(400);
+				textArea.setMinWidth(300);
+				textArea.setMinHeight(400);
+				textArea.setMaxWidth(300);
+				textArea.setMaxHeight(400);
+				textArea.setPrefWidth(300);
+				textArea.setPrefHeight(400);
+				textArea.setEditable(false);
+				PrintStream printStream = new PrintStream(new CustomOutputStream(textArea));
+
+				// keeps reference of standard output stream
+				standardOut = System.out;
+
+				// re-assigns standard output stream and error output stream
+				System.setOut(printStream);
+				System.setErr(printStream);
+
+				StackPane secondaryLayout = new StackPane();
+				secondaryLayout.getChildren().add(textArea);
+
+				Scene secondScene = new Scene(secondaryLayout, 400, 700);
+				secondScene.getStylesheets().add(getClass().getResource("MainApp.css").toExternalForm());
+
+				// New window (Stage)
+				Stage newWindow = new Stage();
+				newWindow.setTitle("Hotel Booking Status");
+				newWindow.setScene(secondScene);
+
+				// Set position of second window, related to primary window.
+				newWindow.setX(stage.getX() - 400);
+				newWindow.setY(stage.getY() + 100);
+				newWindow.show();
+
+				
+				
+				booking.setCustomer_id(companyIdField.getText());
+				booking.getBooking();
+			}
+		});
 	}
 
 	public void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
