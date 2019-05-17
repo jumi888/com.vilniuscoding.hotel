@@ -138,92 +138,92 @@ public class MainApp extends Application {
 		vbox.getChildren().add(gridPane);
 
 		Label companyNameLabel = new Label("Company Name : ");
-		gridPane.add(companyNameLabel, 6, 1);
+		gridPane.add(companyNameLabel, 4, 1);
 
 		TextField companyNameField = new TextField();
 		companyNameField.setPrefHeight(20);
 		companyNameField.setPromptText("Enter text here");
-		gridPane.add(companyNameField, 6, 2);
+		gridPane.add(companyNameField, 4, 2);
 
 		Label companyIdLabel = new Label("Company ID : ");
-		gridPane.add(companyIdLabel, 6, 3);
+		gridPane.add(companyIdLabel, 4, 3);
 
 		TextField companyIdField = new TextField();
 		companyIdField.setPrefHeight(20);
 		companyIdField.setPromptText("Enter text here");
-		gridPane.add(companyIdField, 6, 4);
+		gridPane.add(companyIdField, 4, 4);
 
 		Label customerNameLabel = new Label("Customer Name : ");
-		gridPane.add(customerNameLabel, 6, 5);
+		gridPane.add(customerNameLabel, 4, 5);
 
 		TextField customerNameField = new TextField();
 		customerNameField.setPrefHeight(20);
 		customerNameField.setPromptText("Enter text here");
-		gridPane.add(customerNameField, 6, 6);
+		gridPane.add(customerNameField, 4, 6);
 
 		Label customerSurNameLabel = new Label("Customer Last Name : ");
-		gridPane.add(customerSurNameLabel, 6, 7);
+		gridPane.add(customerSurNameLabel, 4, 7);
 
 		TextField customerSurNameField = new TextField();
 		customerSurNameField.setPrefHeight(20);
 		customerSurNameField.setPromptText("Enter text here");
-		gridPane.add(customerSurNameField, 6, 8);
+		gridPane.add(customerSurNameField, 4, 8);
 
 		Label customerPhoneLabel = new Label("Phone Number : ");
-		gridPane.add(customerPhoneLabel, 6, 9);
+		gridPane.add(customerPhoneLabel, 4, 9);
 
 		TextField customerPhoneField = new TextField();
 		customerPhoneField.setPrefHeight(20);
 		customerPhoneField.setPromptText("Enter text here");
-		gridPane.add(customerPhoneField, 6, 10);
+		gridPane.add(customerPhoneField, 4, 10);
 
 		Label customerAdressLabel = new Label("Adress : ");
-		gridPane.add(customerAdressLabel, 6, 11);
+		gridPane.add(customerAdressLabel, 4, 11);
 
 		TextField customerAdressField = new TextField();
 		customerPhoneField.setPrefHeight(20);
 		customerAdressField.setPromptText("Enter text here");
-		gridPane.add(customerAdressField, 6, 12);
+		gridPane.add(customerAdressField, 4, 12);
 
 		Label customerCityLabel = new Label("City : ");
-		gridPane.add(customerCityLabel, 6, 13);
+		gridPane.add(customerCityLabel, 4, 13);
 
 		TextField customerCityField = new TextField();
 		customerCityField.setPrefHeight(20);
 		customerCityField.setPromptText("Enter text here");
-		gridPane.add(customerCityField, 6, 14);
+		gridPane.add(customerCityField, 4, 14);
 
 		Label customerCountryLabel = new Label("Country : ");
-		gridPane.add(customerCountryLabel, 6, 15);
+		gridPane.add(customerCountryLabel, 4, 15);
 
 		TextField customerCountryField = new TextField();
 		customerCountryField.setPrefHeight(20);
 		customerCountryField.setPromptText("Enter text here");
-		gridPane.add(customerCountryField, 6, 16);
+		gridPane.add(customerCountryField, 4, 16);
 
 		Label customerPostalLabel = new Label("Post Code : ");
-		gridPane.add(customerPostalLabel, 6, 17);
+		gridPane.add(customerPostalLabel, 4, 17);
 
 		TextField customerPostalField = new TextField();
 		customerPostalField.setPrefHeight(20);
 		customerPostalField.setPromptText("Enter text here");
-		gridPane.add(customerPostalField, 6, 18);
+		gridPane.add(customerPostalField, 4, 18);
 
 		Label customerEmailLabel = new Label("Email adress : ");
-		gridPane.add(customerEmailLabel, 6, 19);
+		gridPane.add(customerEmailLabel, 4, 19);
 
 		TextField customerEmailField = new TextField();
 		customerEmailField.setPrefHeight(20);
 		customerEmailField.setPromptText("Enter text here");
-		gridPane.add(customerEmailField, 6, 20);
+		gridPane.add(customerEmailField, 4, 20);
 
 		Label customerBirthLabel = new Label("Date of Birth : ");
-		gridPane.add(customerBirthLabel, 6, 21);
+		gridPane.add(customerBirthLabel, 4, 21);
 
 		TextField customerBirthField = new TextField();
 		customerBirthField.setPrefHeight(20);
 		customerBirthField.setPromptText("Enter text here");
-		gridPane.add(customerBirthField, 6, 22);
+		gridPane.add(customerBirthField, 4, 22);
 
 		Label typeOfRoomLabel = new Label("Choose type of room  : ");
 		gridPane.add(typeOfRoomLabel, 3, 1);
@@ -619,6 +619,62 @@ public class MainApp extends Application {
 				booking.getBooking();
 			}
 		});
+	
+		Button button5 = new Button("Customers List");
+		gridPane.add(button5, 4, 24);
+		button5.setMinWidth(150);
+		button5.setMinHeight(50);
+		button5.setMaxWidth(150);
+		button5.setMaxHeight(50);
+		button5.setPrefWidth(150);
+		button5.setPrefHeight(50);
+
+		button5.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+
+				
+
+				TextArea textArea = new TextArea();
+				textArea.setPrefHeight(650);
+				textArea.setMinWidth(950);
+				textArea.setMinHeight(650);
+				textArea.setMaxWidth(950);
+				textArea.setMaxHeight(650);
+				textArea.setPrefWidth(950);
+				textArea.setPrefHeight(650);
+				textArea.setEditable(false);
+				PrintStream printStream = new PrintStream(new CustomOutputStream(textArea));
+
+				// keeps reference of standard output stream
+				standardOut = System.out;
+
+				// re-assigns standard output stream and error output stream
+				System.setOut(printStream);
+				System.setErr(printStream);
+
+				StackPane secondaryLayout = new StackPane();
+				secondaryLayout.getChildren().add(textArea);
+
+				Scene secondScene = new Scene(secondaryLayout, 1000, 700);
+				secondScene.getStylesheets().add(getClass().getResource("MainApp.css").toExternalForm());
+
+				// New window (Stage)
+				Stage newWindow = new Stage();
+				newWindow.setTitle("Customers List");
+				newWindow.setScene(secondScene);
+
+				// Set position of second window, related to primary window.
+				newWindow.setX(stage.getX() - 400);
+				newWindow.setY(stage.getY() + 100);
+				newWindow.show();
+
+				
+				
+				customer.getCustomers();
+			}
+		});
+	
 	}
 
 	public void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
